@@ -2,8 +2,10 @@ package com.example.movieapp
 
 import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -32,88 +34,33 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.movieapp.navigation.MovieNavigation
 import com.example.movieapp.ui.theme.MovieAppTheme
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MovieAppTheme {
-                AppContent()
+                MovieNavigation()
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppContent(
-    movieList: List<String> =
-        listOf(
-            "Bahubali",
-            "Interstellar",
-            "KGF",
-            "Avengers",
-            "Peacemaker",
-            "Knives Out",
-            "No Time To Die",
-            "Transformers"
-        )
-) {
-    Scaffold(
-        topBar =
-        {
-            TopAppBar(
-                title = { Text(text = "Movies") }
-            )
-        }
-
-    ) {
-        LazyColumn(
-            modifier = Modifier.padding(it),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-
-            contentPadding = PaddingValues(10.dp)
-        ) {
-            items(movieList) {
-                ListItem(movie = it)
-            }
-        }
-    }
-}
-
-@Composable
-fun ListItem(movie: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = "Movie Image",
-                modifier = Modifier.size(100.dp)
-            )
-            Text(text = movie)
-
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun AppPreview() {
     MovieAppTheme {
-        AppContent()
+        MovieNavigation()
     }
 }
